@@ -77,16 +77,15 @@ public class DepopBotGUI {
             String password = new String(passwordField.getPassword());
 
             if (!username.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
-                JOptionPane.showMessageDialog(frame, "Login successful for: " + username);
-                statusButton.setText("Logged In");
-
+                JOptionPane.showMessageDialog(frame, "Logging into: " + username);
+                
                 System.out.println("Username: " + username);
                 System.out.println("Email: " + email);
                 System.out.println("Password: " + password);
 
                 try {
                     
-                    ProcessBuilder processBuilder = new ProcessBuilder("python", "login.py", username, email, password);
+                    ProcessBuilder processBuilder = new ProcessBuilder("python", "bot.py", username, email, password);
                     processBuilder.redirectErrorStream(true);
                     Process process = processBuilder.start();
 
@@ -98,10 +97,10 @@ public class DepopBotGUI {
                     }
 
                     process.waitFor();
+                    statusButton.setText("Active");
 
                 } catch (IOException | InterruptedException ex) {
-                    ex.printStackTrace();
-                    JOptionPane.showMessageDialog(frame, "Error executing login.py", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Error executing bot.py", "Error", JOptionPane.ERROR_MESSAGE);
                 }
 
             } else {
